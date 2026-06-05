@@ -1,16 +1,56 @@
 const { useState, useEffect } = window.React;
 
 const TooltipButton = ({ children, className, style, onClick, onDoubleClick, title }) => {
+    const internalRef = window.React.useRef(null);
+    const [visible, setVisible] = window.React.useState(false);
+    const [pos, setPos] = window.React.useState({ x: 0, y: 0, edgePosition: 'left' });
+
+    const handleMouseEnter = () => {
+        if (internalRef.current) {
+            const rect = internalRef.current.getBoundingClientRect();
+            const edgePosition = window.useAppStore?.getState().edgePosition || 'left';
+            const x = edgePosition === 'left' ? rect.left - 8 : rect.right + 8;
+            const y = rect.top + rect.height / 2;
+            setPos({ x, y, edgePosition });
+        }
+        setVisible(true);
+    };
+
+    const handleMouseLeave = () => setVisible(false);
+
     return (
-        <button
-            className={`group relative flex items-center justify-center outline-none ${className || ''}`}
-            style={style}
-            onClick={onClick}
-            onDoubleClick={onDoubleClick}
-            title={title}
-        >
-            {children}
-        </button>
+        <>
+            <button
+                ref={internalRef}
+                className={`group relative flex items-center justify-center outline-none ${className || ''}`}
+                style={style}
+                onClick={(e) => {
+                    setVisible(false);
+                    if (onClick) onClick(e);
+                }}
+                onDoubleClick={onDoubleClick}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+            >
+                {children}
+            </button>
+            {visible && title && window.ReactDOM && window.ReactDOM.createPortal(
+                <div
+                    className="fixed pointer-events-none whitespace-nowrap border rounded-lg py-1.5 px-3 shadow-lg text-xs font-semibold text-primary"
+                    style={{
+                        zIndex: 999999,
+                        backgroundColor: 'var(--theme-bg-base)',
+                        borderColor: 'var(--theme-border)',
+                        top: pos.y,
+                        left: pos.edgePosition === 'left' ? pos.x - 4 : pos.x,
+                        transform: pos.edgePosition === 'left' ? 'translate(-100%, -50%)' : 'translate(0%, -50%)',
+                    }}
+                >
+                    {title}
+                </div>,
+                document.body
+            )}
+        </>
     );
 };
 
