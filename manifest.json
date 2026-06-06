@@ -1,7 +1,7 @@
 {
   "id": "pin-window-to-top",
   "name": "Pin Window to Top",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Allows you to pin third-party windows to always stay on top within the KoBar interface.",
   "author": "KoBar",
   "entry": "index.js",
@@ -18,5 +18,6 @@
   "image": "https://raw.githubusercontent.com/Kobar-Project/KoBar-Assets/main/Plugins%20images/Pin%20to%20Top/pinwindowtotop.png",
   "storeImage": [
     "https://raw.githubusercontent.com/Kobar-Project/KoBar-Assets/main/Plugins%20images/Pin%20to%20Top/Pin-to-Top1.png"
-  ]
+  ],
+  "apiVersion": "1.0.0"
 }
