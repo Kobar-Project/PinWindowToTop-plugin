@@ -111,20 +111,11 @@ const PinWindowWidget = () => {
         }
     };
 
-    let btnClass = 'w-12 h-12 rounded-full flex items-center justify-center transition-all active:scale-95 shadow-lg ';
-    let btnStyle = {};
-    let iconName = 'push_pin';
-    let tooltip = pinnedWindowHwnd ? 'Unpin Window' : 'Pin to Top';
-
-    if (pinnedWindowHwnd) {
-        btnClass += 'text-white';
-        btnStyle = { backgroundColor: '#10b981', boxShadow: '0 0 20px rgba(16,185,129,0.7)' };
-        iconName = 'bookmark_remove';
-    } else if (isTargetingMode) {
-        btnClass += 'animate-pulse text-red-400 bg-red-500/20 shadow-[0_0_15px_rgba(239,68,68,0.5)]';
-    } else {
-        btnClass += 'bg-white/5 text-slate-400 hover:text-primary hover:bg-white/10 hover:scale-110';
-    }
+    // R2-01: no fill, glow or ring behind the icon in any state; the state shows in the icon and the tooltip only.
+    const btnClass = 'flex items-center justify-center rounded-md transition-colors text-slate-400 hover:text-white hover:bg-white/10';
+    const btnStyle = { width: 'var(--kb-bar-item, 36px)', height: 'var(--kb-bar-item, 36px)' };
+    const iconName = pinnedWindowHwnd ? 'bookmark_remove' : 'push_pin';
+    const tooltip = pinnedWindowHwnd ? 'Unpin Window' : 'Pin to Top';
 
     return (
         <TooltipButton
@@ -134,7 +125,7 @@ const PinWindowWidget = () => {
             onClick={handleClick}
             onDoubleClick={handleDoubleClick}
         >
-            <span className="material-symbols-outlined text-[24px]">{iconName}</span>
+            <span className="material-symbols-outlined" style={{ fontSize: 'var(--kb-bar-icon, 20px)' }}>{iconName}</span>
         </TooltipButton>
     );
 };
