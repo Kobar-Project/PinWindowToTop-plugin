@@ -19,5 +19,9 @@
   "storeImage": [
     "https://raw.githubusercontent.com/Kobar-Project/KoBar-Assets/main/Plugins%20images/Pin%20to%20Top/Pin-to-Top1.png"
   ],
-  "apiVersion": "1.0.0"
+  "apiVersion": "1.0.0",
+  "bar": {
+    "tile": { "sensitive": false },
+    "defaultSize": "icon"
+  }
 }
